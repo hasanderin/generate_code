@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="res_config_settings_view_form_stock_code" model="ir.ui.view">
+		<field name="name">res.config.settings.view.form.stock.code</field>
+		<field name="model">res.config.settings</field>
+		<field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//div[@id='inventory_barcode']" position="after">
+				<div class="app_settings_block" data-string="Stok Kodu" string="Stok Kodu">
+					<h2>Stok Kodu Ayarları</h2>
+					<group>
+						<field name="stock_code_prefix" placeholder="STK"/>
+					</group>
+				</div>
+			</xpath>
+		</field>
+	</record>
+</odoo>

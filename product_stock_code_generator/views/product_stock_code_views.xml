@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_product_template_form_inherit_stock_code" model="ir.ui.view">
+		<field name="name">product.template.form.stock.code</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='default_code']" position="after">
+				<group string="Stok Kodu">
+					<field name="stock_code"/>
+					<button name="action_generate_stock_code" type="object" string="Stok Kodu Oluştur" class="oe_highlight" attrs="{'invisible': [('stock_code','!=',False)]}"/>
+				</group>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_product_tree_inherit_stock_code" model="ir.ui.view">
+		<field name="name">product.product.tree.stock.code</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_product_tree_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//tree" position="inside">
+				<field name="stock_code"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_product_form_inherit_stock_code" model="ir.ui.view">
+		<field name="name">product.product.form.stock.code</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='default_code']" position="after">
+				<field name="stock_code"/>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_template_search_inherit_stock_code" model="ir.ui.view">
+		<field name="name">product.template.search.stock.code</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_search_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//search" position="inside">
+				<field name="stock_code"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

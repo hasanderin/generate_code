@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="seq_product_stock_code" model="ir.sequence">
+		<field name="name">Ürün Stok Kodu</field>
+		<field name="code">product.stock.code.generator</field>
+		<field name="prefix"></field>
+		<field name="padding">5</field>
+		<field name="number_next">1</field>
+		<field name="implementation">standard</field>
+	</record>
+</odoo>
