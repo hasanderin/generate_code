@@ -27,6 +27,17 @@ class ProductTemplate(models.Model):
             template.stock_code = f"{prefix}{seq}"
             template.product_variant_ids.write({'stock_code': template.stock_code})
 
+    def action_open_stock_code_settings(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Stok Kodu Ayarları'),
+            'res_model': 'res.config.settings',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_stock_code_prefix': self.env['ir.config_parameter'].sudo().get_param('product_stock_code_generator.prefix', default='STK')},
+        }
+
     @api.model
     def create(self, vals):
         template = super().create(vals)
