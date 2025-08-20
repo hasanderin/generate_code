@@ -5,12 +5,15 @@
 		<field name="model">res.config.settings</field>
 		<field name="inherit_id" ref="stock.res_config_settings_view_form"/>
 		<field name="arch" type="xml">
-			<xpath expr="//sheet" position="inside">
-				<div class="app_settings_block" data-string="Stok Kodu" string="Stok Kodu">
-					<h2>Stok Kodu Ayarları</h2>
-					<group>
+			<xpath expr="//field[@name='group_stock_multi_locations']" position="after">
+				<div class="o_setting_container">
+					<div class="o_setting_left_pane">
 						<field name="stock_code_prefix" placeholder="STK"/>
-					</group>
+					</div>
+					<div class="o_setting_right_pane">
+						<label for="stock_code_prefix" string="Stok Kodu Ön Eki"/>
+						<div class="text-muted">Stok kodu üretiminde kullanılacak ön ek.</div>
+					</div>
 				</div>
 			</xpath>
 		</field>
