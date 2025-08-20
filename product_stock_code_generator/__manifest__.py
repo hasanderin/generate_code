@@ -11,7 +11,6 @@
         'data/ir_sequence_data.xml',
         'views/product_stock_code_views.xml',
         'views/res_config_settings_views.xml',
-        'views/menu.xml',
     ],
     'installable': True,
     'application': False,
