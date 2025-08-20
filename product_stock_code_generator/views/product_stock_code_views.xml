@@ -6,7 +6,6 @@
 		<field name="inherit_id" ref="product.product_template_only_form_view"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='default_code']" position="after">
-				<label for="stock_code" string="Stok Kodu"/>
 				<field name="stock_code"/>
 				<button name="action_generate_stock_code" type="object" string="Stok Kodu Oluştur" class="oe_highlight" attrs="{'invisible': [('stock_code','!=',False)]}"/>
 			</xpath>
@@ -30,7 +29,6 @@
 		<field name="inherit_id" ref="product.product_normal_form_view"/>
 		<field name="arch" type="xml">
 			<xpath expr="//field[@name='default_code']" position="after">
-				<label for="stock_code" string="Stok Kodu"/>
 				<field name="stock_code"/>
 			</xpath>
 		</field>
