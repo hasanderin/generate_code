@@ -8,8 +8,17 @@
 			<xpath expr="//field[@name='default_code']" position="after">
 				<field name="stock_code"/>
 				<button name="action_generate_stock_code" type="object" string="Stok Kodu Oluştur" class="oe_highlight" attrs="{'invisible': [('stock_code','!=',False)]}"/>
-				<button name="action_open_stock_code_settings" type="object" string="Ön Eki Ayarla" class="oe_link"/>
 			</xpath>
+		</field>
+	</record>
+
+	<!-- Cleanup: remove any existing prefix settings button left from older versions or Studio edits -->
+	<record id="view_product_template_form_inherit_remove_prefix_btn" model="ir.ui.view">
+		<field name="name">product.template.form.remove.prefix.btn</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//button[@name='action_open_stock_code_settings']" position="replace"/>
 		</field>
 	</record>
 
