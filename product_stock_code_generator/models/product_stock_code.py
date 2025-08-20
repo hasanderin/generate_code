@@ -19,13 +19,11 @@ class ProductTemplate(models.Model):
         sequence_code = 'product.stock.code.generator'
         for template in self:
             if template.stock_code:
-                # If already set, do not regenerate automatically
                 continue
             seq = self.env['ir.sequence'].sudo().next_by_code(sequence_code)
             if not seq:
                 raise UserError(_('Stok kodu için sıra (sequence) bulunamadı.'))
             template.stock_code = f"{prefix}{seq}"
-            template.product_variant_ids.write({'stock_code': template.stock_code})
 
     def action_open_stock_code_settings(self):
         self.ensure_one()
@@ -41,16 +39,10 @@ class ProductTemplate(models.Model):
     @api.model
     def create(self, vals):
         template = super().create(vals)
-        # If user provided stock_code manually, propagate to variants
-        if vals.get('stock_code'):
-            template.product_variant_ids.write({'stock_code': template.stock_code})
         return template
 
     def write(self, vals):
-        res = super().write(vals)
-        if 'stock_code' in vals:
-            self.mapped('product_variant_ids').write({'stock_code': vals.get('stock_code')})
-        return res
+        return super().write(vals)
 
 
 class ProductProduct(models.Model):
