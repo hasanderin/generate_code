@@ -37,6 +37,18 @@ class ProductTemplate(models.Model):
         }
 
     @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = list(args or [])
+        if name:
+            domain = ['|', '|', '|',
+                      ('stock_code', operator, name),
+                      ('default_code', operator, name),
+                      ('barcode', operator, name),
+                      ('name', operator, name)]
+            return self.search(domain + args, limit=limit).name_get()
+        return super().name_search(name=name, args=args, operator=operator, limit=limit)
+
+    @api.model
     def create(self, vals):
         template = super().create(vals)
         return template
@@ -55,3 +67,15 @@ class ProductProduct(models.Model):
         copy=False,
         string='Stok Kodu'
     )
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = list(args or [])
+        if name:
+            domain = ['|', '|', '|',
+                      ('stock_code', operator, name),
+                      ('default_code', operator, name),
+                      ('barcode', operator, name),
+                      ('name', operator, name)]
+            return self.search(domain + args, limit=limit).name_get()
+        return super().name_search(name=name, args=args, operator=operator, limit=limit)
