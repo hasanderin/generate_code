@@ -61,7 +61,6 @@
 		</field>
 	</record>
 
-	<!-- Dedicated search view for product variants including stock_code -->
 	<record id="product_product_search_view_with_stock_code" model="ir.ui.view">
 		<field name="name">product.product.search.with.stock.code</field>
 		<field name="model">product.product</field>
@@ -73,10 +72,8 @@
 		</field>
 	</record>
 
-	<!-- Point the variants action to use our search view -->
-	<record id="product_normal_action_set_search" model="ir.actions.act_window">
-		<field name="name">dummy</field>
-		<field name="inherit_id" ref="product.product_normal_action"/>
+	<!-- Update existing action to use our search view -->
+	<record id="product.product_normal_action" model="ir.actions.act_window">
 		<field name="search_view_id" ref="product_stock_code_generator.product_product_search_view_with_stock_code"/>
 	</record>
 </odoo>
