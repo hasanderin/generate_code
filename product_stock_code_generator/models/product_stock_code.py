@@ -37,7 +37,7 @@ class ProductTemplate(models.Model):
         }
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
         args = list(args or [])
         if name:
             domain = ['|', '|', '|',
@@ -45,8 +45,14 @@ class ProductTemplate(models.Model):
                       ('default_code', operator, name),
                       ('barcode', operator, name),
                       ('name', operator, name)]
-            return self.search(domain + args, limit=limit).name_get()
-        return super().name_search(name=name, args=args, operator=operator, limit=limit)
+            return super()._name_search(name='', args=domain + args, operator=operator, limit=limit, name_get_uid=name_get_uid)
+        return super()._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        # Defer to _name_search to keep behavior consistent across contexts
+        ids = self._name_search(name=name, args=args, operator=operator, limit=limit)
+        return self.browse(ids).name_get()
 
     @api.model
     def create(self, vals):
@@ -64,12 +70,13 @@ class ProductProduct(models.Model):
         related='product_tmpl_id.stock_code',
         readonly=False,
         store=True,
+        index=True,
         copy=False,
         string='Stok Kodu'
     )
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
         args = list(args or [])
         if name:
             domain = ['|', '|', '|',
@@ -77,5 +84,10 @@ class ProductProduct(models.Model):
                       ('default_code', operator, name),
                       ('barcode', operator, name),
                       ('name', operator, name)]
-            return self.search(domain + args, limit=limit).name_get()
-        return super().name_search(name=name, args=args, operator=operator, limit=limit)
+            return super()._name_search(name='', args=domain + args, operator=operator, limit=limit, name_get_uid=name_get_uid)
+        return super()._name_search(name=name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        ids = self._name_search(name=name, args=args, operator=operator, limit=limit)
+        return self.browse(ids).name_get()
