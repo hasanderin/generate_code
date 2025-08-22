@@ -12,7 +12,6 @@
 		</field>
 	</record>
 
-	<!-- Add column to product template tree -->
 	<record id="view_product_template_tree_inherit_stock_code" model="ir.ui.view">
 		<field name="name">product.template.tree.stock.code</field>
 		<field name="model">product.template</field>
@@ -52,7 +51,23 @@
 		<field name="inherit_id" ref="product.product_template_search_view"/>
 		<field name="arch" type="xml">
 			<xpath expr="//search" position="inside">
-				<field name="stock_code"/>
+				<field name="stock_code" string="Stok Kodu"/>
+				<filter name="with_stock_code" string="Stok Kodu Var" domain="[('stock_code','!=',False)]"/>
+				<filter name="without_stock_code" string="Stok Kodu Yok" domain="[('stock_code','=',False)]"/>
+			</xpath>
+			<xpath expr="//search/field[@name='name']" position="attributes">
+				<attribute name="filter_domain">['|', ('name','ilike', self), ('stock_code','ilike', self)]</attribute>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_product_product_search_inherit_stock_code" model="ir.ui.view">
+		<field name="name">product.product.search.stock.code</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.view_product_product_filter"/>
+		<field name="arch" type="xml">
+			<xpath expr="//search/field[@name='name']" position="attributes">
+				<attribute name="filter_domain">['|', ('name','ilike', self), ('stock_code','ilike', self)]</attribute>
 			</xpath>
 		</field>
 	</record>
