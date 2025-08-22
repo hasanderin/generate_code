@@ -54,6 +54,16 @@ class ProductTemplate(models.Model):
         ids = self._name_search(name=name, args=args, operator=operator, limit=limit)
         return self.browse(ids).name_get()
 
+    def name_get(self):
+        # Decorate display names with stock_code when present
+        result = super().name_get()
+        id_to_name = dict(result)
+        for record in self:
+            base = id_to_name.get(record.id)
+            if base and record.stock_code:
+                id_to_name[record.id] = f"{base} [{record.stock_code}]"
+        return [(rid, name) for rid, name in id_to_name.items()]
+
     @api.model
     def create(self, vals):
         template = super().create(vals)
@@ -91,3 +101,12 @@ class ProductProduct(models.Model):
     def name_search(self, name='', args=None, operator='ilike', limit=100):
         ids = self._name_search(name=name, args=args, operator=operator, limit=limit)
         return self.browse(ids).name_get()
+
+    def name_get(self):
+        result = super().name_get()
+        id_to_name = dict(result)
+        for record in self:
+            base = id_to_name.get(record.id)
+            if base and record.stock_code:
+                id_to_name[record.id] = f"{base} [{record.stock_code}]"
+        return [(rid, name) for rid, name in id_to_name.items()]
